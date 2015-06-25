@@ -1,7 +1,66 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+	<head>
+		<title>Erde</title>
+		<meta charset="UTF-8">
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+			//http://jsfiddle.net/dccj129c/
+			$(document).ready(function(){
+				draw_circle(0);
+				$("#button").click(function(){
+					distance = $("#input").val();
+					draw_circle(distance);
+				});
+			});
+			function draw_circle(distance){
+				var canvas = document.getElementById('canvas');
+				var context = canvas.getContext('2d');
+				var diameter_earth = 12742;
+				var rad = distance/diameter_earth;
+				var radius = canvas.height / 2;
+				var padding = 2;
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.beginPath();
+				context.arc(radius, radius, radius-(padding), 0, 2 * Math.PI, false);
+				context.fillStyle = "#3370d4";
+				context.fill();
+				context.closePath();
+				
+				context.beginPath();
+				context.arc(radius, radius, radius-(padding), -(Math.PI/2+rad), (rad*2)-(Math.PI/2+rad), false);
+				context.lineWidth = 2;
+				context.strokeStyle = '#ff0000';
+				context.stroke();
+				context.closePath();
+			}
+		</script>
+		<style>
+			body{
+				padding: 20px;
+				margin: 0px;
+			}
+			canvas{
+				background: #fff;
+			}
+			div#input_container input{
+				display: block;
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="input_container">
+			<input type="text" placeholder="Von" />
+			<input type="text" placeholder="Bis" />
+			<input id="input" type="text" placeholder="Distanz" />
+			<input id="button" type="button" value="submit" />
+		</div>
+		<canvas id="canvas" width="400px" height="400px"></canvas>
+		<!---
+		<svg height="400" width="400">
+			<circle cx="200" cy="200" r="198" stroke="black" stroke-width="2"/>
+			<circle cx="200" cy="200" r="198" fill="red" />
+		</svg> --->
+	</body>
 </html>
